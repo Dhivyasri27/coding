@@ -1,0 +1,84 @@
+#include <stdio.h>
+#define MAX 5
+
+// Stack structure
+struct Stack {
+    int items[MAX];
+    int top;
+};
+
+// Function to initialize the stack
+void initialize(struct Stack *s) {
+    s->top = -1;
+}
+
+// Function to check if the stack is full
+int isFull(struct Stack *s) {
+    return s->top == MAX - 1;
+}
+
+// Function to check if the stack is empty
+int isEmpty(struct Stack *s) {
+    return s->top == -1;
+}
+
+// Function to push an element into the stack
+void push(struct Stack *s, int value) {
+    if (isFull(s)) {
+        printf("Stack is full! Cannot push %d\n", value);
+    } else {
+        s->top++;
+        s->items[s->top] = value;
+        printf("%d pushed into stack\n", value);
+    }
+}
+
+// Function to pop an element from the stack
+int pop(struct Stack *s) {
+    if (isEmpty(s)) {
+        printf("Stack is empty! Cannot pop\n");
+        return -1;
+    } else {
+        int value = s->items[s->top];
+        s->top--;
+        return value;
+    }
+}
+
+// Function to print the stack elements
+void printStack(struct Stack *s) {
+    if (isEmpty(s)) {
+        printf("Stack is empty\n");
+    } else {
+        printf("Stack elements are:\n");
+        for (int i = s->top; i >= 0; i--) {
+            printf("%d\n", s->items[i]);
+        }
+    }
+}
+
+int main() {
+    struct Stack s;
+    initialize(&s);
+
+    push(&s, 10);
+    push(&s, 20);
+    push(&s, 30);
+    push(&s, 40);
+    push(&s, 50);
+
+    // Try to push another element when the stack is full
+    push(&s, 60);
+
+    // Print stack elements
+    printStack(&s);
+
+    // Pop elements from the stack
+    printf("%d popped from stack\n", pop(&s));
+    printf("%d popped from stack\n", pop(&s));
+
+    // Print stack elements after popping
+    printStack(&s);
+
+    return 0;
+}
